@@ -1,5 +1,3 @@
-import withPWA from 'next-pwa';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -12,20 +10,19 @@ const nextConfig = {
         // 本番環境ではReactの開発用機能を削除
         removeConsole: process.env.NODE_ENV === 'production',
     },
-    // Cloudflare Pages用の最適化設定
-    trailingSlash: true,
+    // 静的アセットの最適化
     images: {
         unoptimized: true
     },
-    // スタンドアロンモード（Next.jsランタイムを含める）
-    output: 'standalone',
+    // ルーティングとトレイリングスラッシュの設定
+    trailingSlash: true,
+    // Cloudflare Pagesのための設定
+    experimental: {
+        // Cloudflare Compatibilityのための設定
+        serverActions: {
+            bodySizeLimit: '2mb',
+        },
+    },
 };
 
-const config = withPWA({
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === 'development',
-})(nextConfig);
-
-export default config; 
+export default nextConfig;

@@ -1,42 +1,34 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { getHolidayPlanById } from '@/utils/storage';
-import PlanDetailClient from './PlanDetailClient';
-import { HolidayPlan } from '@/types';
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
-export const runtime = 'edge';
+// 静的モードで動作するように変更
+// export const runtime = 'edge';
 
+// 型定義
 type PageProps = {
     params: {
         id: string;
     };
 };
 
-export default function PlanDetail({ params }: PageProps) {
-    const id = params.id;
-    const router = useRouter();
-    const [plan, setPlan] = useState<HolidayPlan | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+// クライアントコンポーネントを動的インポート（SSRを無効化）
+const PlanDetailClientWrapper = dynamic(() => import('./PlanDetailClientWrapper'), {
+    ssr: false,
+});
 
-    useEffect(() => {
-        const planData = getHolidayPlanById(id);
-        if (planData) {
-            setPlan(planData);
-        } else {
-            router.push('/');
-        }
-        setIsLoading(false);
-    }, [id, router]);
+// ローディングフォールバックコンポーネント
+const LoadingFallback = () => (
+    <div className="py-6 flex justify-center">読み込み中...</div>
+);
 
-    if (isLoading) {
-        return <div>読み込み中...</div>;
-    }
+export default function PlanPage({ params }: PageProps) {
+    const { id } = params;
 
-    if (!plan) {
-        return <div>プランが見つかりませんでした</div>;
-    }
-
-    return <PlanDetailClient plan={plan} id={id} />;
-} 
+    return (
+        <Suspense fallback={<LoadingFallback />}>
+            <PlanDetailClientWrapper id={id} />
+        </Suspense>
+    );
+}

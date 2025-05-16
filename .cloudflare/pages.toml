@@ -3,7 +3,7 @@
 command = "npm run pages:build"
 
 [site]
-bucket = ".vercel/output/static"
+bucket = ".deploy"
 
 [compatibility_flags]
 nodejs_compat = true
@@ -17,4 +17,4 @@ NODE_ENV = "development"
 [[redirects]]
 from = "/*"
 to = "/index.html"
-status = 200 
+status = 200

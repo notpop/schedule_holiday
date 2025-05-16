@@ -9,10 +9,10 @@
     "lint": "next lint",
     "generate-icons": "node scripts/generate-icons.mjs",
     "deploy": "./scripts/deploy.sh",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static",
-    "pages:watch": "npx @cloudflare/next-on-pages --watch",
-    "pages:dev": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
+    "pages:build": "next build && npx @cloudflare/next-on-pages",
+    "cloudflare:build": "npx @cloudflare/next-on-pages",
+    "cloudflare:deploy": "npm run cloudflare:build && wrangler pages deploy .deploy",
+    "cloudflare:dev": "npx wrangler pages dev .deploy --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.8.7",

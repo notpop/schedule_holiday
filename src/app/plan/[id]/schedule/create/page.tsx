@@ -1,43 +1,34 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { getHolidayPlanById } from '@/utils/storage';
-import CreateScheduleClient from './CreateScheduleClient';
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
-export const runtime = 'edge';
+// 静的モードで動作するように変更
+// export const runtime = 'edge';
 
+// 型定義
 type PageProps = {
     params: {
         id: string;
     };
 };
 
-export default function CreateSchedule({ params }: PageProps) {
+// クライアントコンポーネントを動的インポート（SSRを無効化）
+const CreateScheduleClientWrapper = dynamic(() => import('./CreateScheduleClientWrapper'), {
+    ssr: false,
+});
+
+// ローディングフォールバックコンポーネント
+const LoadingFallback = () => (
+    <div className="py-6 flex justify-center">読み込み中...</div>
+);
+
+export default function CreateSchedulePage({ params }: PageProps) {
     const { id } = params;
-    const router = useRouter();
-    const [isValid, setIsValid] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        // プランが存在するか確認
-        const planData = getHolidayPlanById(id);
-        if (planData) {
-            setIsValid(true);
-        } else {
-            // 存在しないプランの場合はホームに戻る
-            router.push('/');
-        }
-        setIsLoading(false);
-    }, [id, router]);
-
-    if (isLoading) {
-        return <div>読み込み中...</div>;
-    }
-
-    if (!isValid) {
-        return <div>プランが見つかりませんでした</div>;
-    }
-
-    return <CreateScheduleClient planId={id} />;
-} 
+    return (
+        <Suspense fallback={<LoadingFallback />}>
+            <CreateScheduleClientWrapper planId={id} />
+        </Suspense>
+    );
+}

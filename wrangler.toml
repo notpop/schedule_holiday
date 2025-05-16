@@ -1,6 +1,6 @@
 # Cloudflare Pagesの設定ファイル
 name = "holiday-schedule"
-compatibility_date = "2023-11-21"
+compatibility_date = "2024-07-01"
 compatibility_flags = ["nodejs_compat"]
 
 # Pagesのビルド出力ディレクトリ
@@ -8,4 +8,4 @@ pages_build_output_dir = ".deploy"
 
 # 本番環境の設定
 [env.production]
-name = "holiday-schedule-prod" 
+NODE_ENV = "production" 
