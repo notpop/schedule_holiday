@@ -8,9 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "generate-icons": "node scripts/generate-icons.mjs",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static",
+    "pages:watch": "npx @cloudflare/next-on-pages --watch",
+    "pages:dev": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.8.7",
     "canvas": "^3.1.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.11.4",

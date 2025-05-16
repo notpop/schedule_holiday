@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { getHolidayPlanById } from '@/utils/storage';
 import CreateScheduleClient from './CreateScheduleClient';
 
+export const runtime = 'edge';
+
 type PageProps = {
     params: {
         id: string;

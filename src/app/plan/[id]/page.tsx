@@ -6,6 +6,8 @@ import { getHolidayPlanById } from '@/utils/storage';
 import PlanDetailClient from './PlanDetailClient';
 import { HolidayPlan } from '@/types';
 
+export const runtime = 'edge';
+
 type PageProps = {
     params: {
         id: string;

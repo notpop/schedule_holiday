@@ -12,13 +12,6 @@ const nextConfig = {
         // 本番環境ではReactの開発用機能を削除
         removeConsole: process.env.NODE_ENV === 'production',
     },
-    // Cloudflare Pages用の最適化設定
-    trailingSlash: true,
-    images: {
-        unoptimized: true
-    },
-    // スタンドアロンモード（Next.jsランタイムを含める）
-    output: 'standalone',
 };
 
 const config = withPWA({

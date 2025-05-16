@@ -6,6 +6,8 @@ import { getHolidayPlanById } from '@/utils/storage';
 import EditScheduleClient from './EditScheduleClient';
 import { Schedule } from '@/types';
 
+export const runtime = 'edge';
+
 type PageProps = {
     params: {
         id: string;
