@@ -1,4 +1,4 @@
-import { format, parse } from 'date-fns';
+import { format, parse, isAfter, isToday, isBefore } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
 // 文字列形式の日付(YYYY-MM-DD)をフォーマットする
@@ -58,4 +58,30 @@ export const generateTimeSlots = (interval: number = 30): string[] => {
     }
 
     return slots;
+};
+
+// 日付がすでに過去かどうかをチェック
+export const isPastDate = (dateStr: string): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 時間をリセット
+    const date = new Date(dateStr);
+    date.setHours(0, 0, 0, 0); // 時間をリセット
+
+    return isBefore(date, today);
+};
+
+// 日付が現在（今日）かどうかをチェック
+export const isCurrentDate = (dateStr: string): boolean => {
+    const date = new Date(dateStr);
+    return isToday(date);
+};
+
+// 日付が未来かどうかをチェック
+export const isFutureDate = (dateStr: string): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 時間をリセット
+    const date = new Date(dateStr);
+    date.setHours(0, 0, 0, 0); // 時間をリセット
+
+    return isAfter(date, today);
 }; 

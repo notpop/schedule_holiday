@@ -112,23 +112,27 @@ export default function PlanDetail({ params }: PageProps) {
                 className="mb-6"
             >
                 <div className="flex items-center mb-4">
-                    <button
-                        onClick={() => router.back()}
-                        className="mr-4 p-2 rounded-full"
+                    <motion.button
+                        onClick={() => router.push('/')}
+                        className="mr-4 p-2 rounded-full hover:bg-secondary/50 transition-colors"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
-                    </button>
+                    </motion.button>
                     <h1 className="text-2xl font-bold flex-1">{plan.title}</h1>
-                    <button
+                    <motion.button
                         onClick={handleDeletePlan}
-                        className={`p-2 rounded-full ${deleteConfirm === 'plan' ? 'text-accent' : 'text-muted-foreground'}`}
+                        className={`p-2 rounded-full hover:bg-secondary/50 transition-colors ${deleteConfirm === 'plan' ? 'text-accent' : 'text-muted-foreground'}`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
                         </svg>
-                    </button>
+                    </motion.button>
                 </div>
                 <p className="text-muted-foreground">{formatDate(plan.date)}</p>
             </motion.div>
@@ -144,8 +148,12 @@ export default function PlanDetail({ params }: PageProps) {
                         onClick={() => router.push(`/plan/${plan.id}/schedule/create`)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="text-sm bg-primary text-primary-foreground px-4 py-2 rounded-full"
+                        className="text-sm bg-primary text-primary-foreground px-5 py-2.5 rounded-full flex items-center gap-1.5 shadow-md border border-primary/20 hover:bg-primary/90"
                     >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
                         予定を追加
                     </motion.button>
                 </div>
@@ -162,10 +170,14 @@ export default function PlanDetail({ params }: PageProps) {
                         </p>
                         <motion.button
                             onClick={() => router.push(`/plan/${plan.id}/schedule/create`)}
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-md"
+                            className="bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-md border border-primary/20 hover:bg-primary/90 flex items-center justify-center gap-2"
                         >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
                             最初の予定を追加
                         </motion.button>
                     </motion.div>
@@ -180,7 +192,7 @@ export default function PlanDetail({ params }: PageProps) {
                                     exit={{ opacity: 0, x: -100 }}
                                     transition={{ delay: index * 0.05, duration: 0.2 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="bg-secondary rounded-xl p-4 relative"
+                                    className="bg-secondary rounded-lg p-5 shadow-sm hover:shadow-md transition-all border border-secondary/50 relative"
                                     onClick={() => router.push(`/plan/${plan.id}/schedule/${schedule.id}`)}
                                 >
                                     <div className="flex justify-between items-start">
@@ -193,17 +205,19 @@ export default function PlanDetail({ params }: PageProps) {
                                                 <p className="text-sm mt-2 line-clamp-2">{schedule.memo}</p>
                                             )}
                                         </div>
-                                        <button
+                                        <motion.button
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleDeleteSchedule(schedule.id);
                                             }}
-                                            className={`p-2 rounded-full ${deleteConfirm === schedule.id ? 'text-accent' : 'text-muted-foreground'}`}
+                                            className={`p-2 rounded-full hover:bg-secondary/70 transition-colors ${deleteConfirm === schedule.id ? 'text-accent' : 'text-muted-foreground'}`}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
                                             </svg>
-                                        </button>
+                                        </motion.button>
                                     </div>
                                 </motion.div>
                             ))}
