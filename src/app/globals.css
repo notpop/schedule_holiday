@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9f6f2;
+  --foreground: #2c2c2c;
+  --primary: #A06B4E;
+  --primary-foreground: #ffffff;
+  --secondary: #E5D8CB;
+  --secondary-foreground: #473229;
+  --accent: #E77728;
+  --accent-foreground: #ffffff;
+  --muted: #F0E8E0;
+  --muted-foreground: #827165;
+  --border: #E0D4C6;
+  --radius: 0.5rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --radius: var(--radius);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1D1914;
+    --foreground: #f0e8e0;
+    --primary: #C7956D;
+    --primary-foreground: #1D1914;
+    --secondary: #3A2E23;
+    --secondary-foreground: #f0e8e0;
+    --accent: #E98E3D;
+    --accent-foreground: #1D1914;
+    --muted: #342920;
+    --muted-foreground: #BFA58D;
+    --border: #3A2E23;
   }
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  position: fixed;
+  width: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* スクロールバーのカスタマイズ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+}
+
+/* iOSのスタイル調整 */
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+/* アニメーションの最適化 */
+* {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }

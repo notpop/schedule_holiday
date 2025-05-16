@@ -1,0 +1,37 @@
+version: '3'
+
+vars:
+  PROJECT_NAME: holiday-schedule
+
+tasks:
+  # デフォルトタスク: ビルド + デプロイ
+  default:
+    desc: Build and deploy to Cloudflare Pages
+    cmds:
+      - npm run build
+      - wrangler pages deploy .next --project-name {{.PROJECT_NAME}} --branch main
+
+  # ビルドのみ
+  build:
+    desc: Build for production
+    cmds:
+      - npm run build
+
+  # デプロイのみ（事前にビルドが必要）
+  deploy:
+    desc: Deploy to Cloudflare Pages
+    deps: [build]
+    cmds:
+      - wrangler pages deploy .next --project-name {{.PROJECT_NAME}} --branch main
+      
+  # ローカル開発サーバー起動
+  dev:
+    desc: Start development server
+    cmds:
+      - npm run dev
+      
+  # アイコン生成
+  icons:
+    desc: Generate app icons
+    cmds:
+      - npm run generate-icons 
