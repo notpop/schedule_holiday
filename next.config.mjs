@@ -7,6 +7,11 @@ const nextConfig = {
         // ビルド時の型チェックエラーを警告として扱い、ビルドを成功させる
         ignoreBuildErrors: true,
     },
+    // コンパイラオプション
+    compiler: {
+        // 本番環境ではReactの開発用機能を削除
+        removeConsole: process.env.NODE_ENV === 'production',
+    },
 };
 
 const config = withPWA({

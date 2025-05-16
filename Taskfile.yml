@@ -8,8 +8,7 @@ tasks:
   default:
     desc: Build and deploy to Cloudflare Pages
     cmds:
-      - npm run build
-      - wrangler pages deploy .next --project-name {{.PROJECT_NAME}} --branch main
+      - ./scripts/deploy.sh
 
   # ビルドのみ
   build:
@@ -17,12 +16,11 @@ tasks:
     cmds:
       - npm run build
 
-  # デプロイのみ（事前にビルドが必要）
+  # デプロイのみ（カスタムスクリプトを使用）
   deploy:
-    desc: Deploy to Cloudflare Pages
-    deps: [build]
+    desc: Deploy to Cloudflare Pages using optimized script
     cmds:
-      - wrangler pages deploy .next --project-name {{.PROJECT_NAME}} --branch main
+      - ./scripts/deploy.sh
       
   # ローカル開発サーバー起動
   dev:

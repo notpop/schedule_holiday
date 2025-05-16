@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "include": [
+        "/*",
+        "/api/*"
+    ],
+    "exclude": [
+        "/.next/cache/*",
+        "/.next/server/chunks/pages/*",
+        "/.next/server/webpack-runtime.js",
+        "/.next/app-build-manifest.json",
+        "/.next/package.json",
+        "/*.pack",
+        "/node_modules/*"
+    ]
+}
