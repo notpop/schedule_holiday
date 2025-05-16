@@ -72,13 +72,14 @@ export default function CreateScheduleClient({ planId }: CreateScheduleClientPro
             >
                 <button
                     onClick={() => router.back()}
-                    className="mr-4 p-2 rounded-full"
+                    className="mr-4 p-2 rounded-full hover:bg-accent/10 transition-colors"
+                    aria-label="戻る"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <h1 className="text-2xl font-bold">予定を追加</h1>
+                <h1 className="text-2xl font-bold text-[#67A599]">予定を追加</h1>
             </motion.div>
 
             <motion.form
@@ -156,7 +157,7 @@ export default function CreateScheduleClient({ planId }: CreateScheduleClientPro
 
                 <motion.button
                     type="submit"
-                    className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-medium shadow-md"
+                    className="w-full py-3 bg-[#67A599] text-white rounded-xl font-medium shadow-md hover:shadow-lg"
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
                 >

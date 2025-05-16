@@ -1,18 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9f6f2;
-  --foreground: #2c2c2c;
-  --primary: #A06B4E;
-  --primary-foreground: #ffffff;
-  --secondary: #E5D8CB;
-  --secondary-foreground: #473229;
-  --accent: #E77728;
-  --accent-foreground: #ffffff;
-  --muted: #F0E8E0;
-  --muted-foreground: #827165;
-  --border: #E0D4C6;
-  --radius: 0.5rem;
+  --background: #F9F4EF;
+  --foreground: #36393B;
+  --primary: #67A599;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E7E0D6;
+  --secondary-foreground: #584A3A;
+  --accent: #5A7569;
+  --accent-foreground: #FFFFFF;
+  --muted: #EDE5DB;
+  --muted-foreground: #8C7D6B;
+  --border: #D5C8B5;
+  --danger: #A6594F;
+  --success: #739E82;
+  --radius: 1rem;
 }
 
 @theme inline {
@@ -27,6 +29,8 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
   --radius: var(--radius);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -34,17 +38,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1D1914;
-    --foreground: #f0e8e0;
-    --primary: #C7956D;
-    --primary-foreground: #1D1914;
-    --secondary: #3A2E23;
-    --secondary-foreground: #f0e8e0;
-    --accent: #E98E3D;
-    --accent-foreground: #1D1914;
-    --muted: #342920;
-    --muted-foreground: #BFA58D;
-    --border: #3A2E23;
+    --background: #292420;
+    --foreground: #E7E0D6;
+    --primary: #8CBFB4;
+    --primary-foreground: #292420;
+    --secondary: #403830;
+    --secondary-foreground: #E7E0D6;
+    --accent: #749E90;
+    --accent-foreground: #292420;
+    --muted: #352F2A;
+    --muted-foreground: #BBA99A;
+    --border: #463C32;
+    --danger: #C66F64;
+    --success: #7AAE8C;
   }
 }
 
@@ -90,7 +96,7 @@ select,
 button {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-appearance: none;
-  border-radius: 0;
+  border-radius: var(--radius);
 }
 
 /* アニメーションの最適化 */

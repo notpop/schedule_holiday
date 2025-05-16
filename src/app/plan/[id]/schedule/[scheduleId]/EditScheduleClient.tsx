@@ -21,8 +21,8 @@ export default function EditScheduleClient({ planId, schedule }: EditScheduleCli
     const [memo, setMemo] = useState(schedule.memo);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // 30分間隔のタイムスロットを生成
-    const timeSlots = generateTimeSlots(30);
+    // 10分間隔のタイムスロットを生成
+    const timeSlots = generateTimeSlots(10);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -73,13 +73,14 @@ export default function EditScheduleClient({ planId, schedule }: EditScheduleCli
             >
                 <button
                     onClick={() => router.back()}
-                    className="mr-4 p-2 rounded-full"
+                    className="mr-4 p-2 rounded-full hover:bg-accent/10 transition-colors"
+                    aria-label="戻る"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <h1 className="text-2xl font-bold flex-1">予定を編集</h1>
+                <h1 className="text-2xl font-bold flex-1 text-[#67A599]">予定を編集</h1>
             </motion.div>
 
             <motion.form
@@ -155,7 +156,7 @@ export default function EditScheduleClient({ planId, schedule }: EditScheduleCli
 
                 <motion.button
                     type="submit"
-                    className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-medium shadow-md"
+                    className="w-full py-3 bg-[#67A599] text-white rounded-xl font-medium shadow-md hover:bg-[#67A599]/90"
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
                 >

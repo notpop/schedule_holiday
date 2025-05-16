@@ -104,7 +104,7 @@ export default function PlanDetailClient({ plan, id }: PlanDetailClientProps) {
                                 <path d="M19 12H5M12 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <h1 className="text-2xl font-bold">{planData.title}</h1>
+                        <h1 className="text-3xl font-bold text-[#67A599]">{planData.title}</h1>
                     </div>
                 </div>
                 <p className="text-sm text-muted-foreground">{formatDate(planData.date, 'yyyy年MM月dd日 EEEE')} {getCurrentTimeString()}</p>
@@ -112,12 +112,17 @@ export default function PlanDetailClient({ plan, id }: PlanDetailClientProps) {
 
             {/* スワイプのヒント表示 */}
             <motion.div
-                className="mb-4 text-center text-sm text-muted-foreground"
+                className="mb-5 text-center text-sm text-muted-foreground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
             >
-                <p>← 左にスワイプして削除</p>
+                <div className="bg-secondary/40 py-2 px-4 rounded-full inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                        <path d="M14 9l-6 6 6 6" />
+                    </svg>
+                    <p>左にスワイプして削除</p>
+                </div>
             </motion.div>
 
             {/* スケジュールリスト */}
@@ -137,7 +142,7 @@ export default function PlanDetailClient({ plan, id }: PlanDetailClientProps) {
                         {/* 現在/未来の予定 */}
                         {currentAndFuture.length > 0 && (
                             <div>
-                                <h2 className="text-lg font-medium mb-3">予定</h2>
+                                <h2 className="text-xl font-medium mb-3 text-[#67A599]">予定</h2>
                                 <AnimatePresence>
                                     <div className="space-y-3">
                                         {currentAndFuture.map((schedule) => (
@@ -160,7 +165,7 @@ export default function PlanDetailClient({ plan, id }: PlanDetailClientProps) {
                         {/* 過去の予定 */}
                         {past.length > 0 && (
                             <div className="mt-8">
-                                <h2 className="text-lg font-medium mb-3 text-muted-foreground">過去の予定</h2>
+                                <h2 className="text-xl font-medium mb-3 text-[#C17C74]">過去の予定</h2>
                                 <AnimatePresence>
                                     <div className="space-y-3">
                                         {past.map((schedule) => (
@@ -185,15 +190,14 @@ export default function PlanDetailClient({ plan, id }: PlanDetailClientProps) {
 
             {/* フローティング追加ボタン */}
             <motion.div
-                className="fixed bottom-32 right-6 z-50"
+                className="fixed bottom-6 right-6 z-50"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, type: 'spring' }}
-                style={{ right: '24px' }}
             >
                 <motion.button
                     onClick={() => router.push(`/plan/${id}/schedule/create`)}
-                    className="bg-primary text-primary-foreground w-14 h-14 rounded-full flex items-center justify-center shadow-lg border border-primary/20"
+                    className="bg-[#67A599] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-none"
                     whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="予定を追加"
@@ -220,13 +224,19 @@ interface ScheduleItemProps {
 }
 
 function ScheduleItem({ schedule, isPast, onDelete, onSwipe, isActiveSwipe, onNavigate, planDate }: ScheduleItemProps) {
+    // ビンテージカラーを設定
+    const itemColors = {
+        bg: isPast ? 'bg-secondary/70' : 'bg-[#67A599]',
+        text: 'text-white'
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isPast ? 0.7 : 1, y: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.2 }}
-            className="relative overflow-hidden rounded-xl"
+            className="relative overflow-hidden rounded-2xl"
             layout
         >
             {/* スワイプ可能なコンテナ */}
@@ -240,19 +250,19 @@ function ScheduleItem({ schedule, isPast, onDelete, onSwipe, isActiveSwipe, onNa
                 {/* スケジュールボタン */}
                 <div
                     onClick={() => onNavigate(schedule.id)}
-                    className={`w-full p-4 ${isPast ? 'bg-muted grayscale-[30%]' : 'bg-card hover:border-primary/50'} rounded-xl border border-border transition-colors text-left cursor-pointer`}
+                    className={`w-full p-4 ${itemColors.bg} ${itemColors.text} rounded-2xl border-none transition-all text-left cursor-pointer shadow-md hover:shadow-lg`}
                 >
                     <div>
                         <h3 className="font-medium">{schedule.title}</h3>
-                        <p className="text-sm text-muted-foreground mt-1 font-medium">
+                        <p className="text-sm opacity-90 mt-1 font-medium">
                             {formatDate(planDate, 'yyyy年MM月dd日')} {schedule.startTime} - {schedule.endTime}
                         </p>
                         {schedule.memo && (
-                            <p className="text-sm text-muted-foreground mt-2">{schedule.memo}</p>
+                            <p className="text-sm opacity-80 mt-2">{schedule.memo}</p>
                         )}
                     </div>
                     <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-90">
                             <path d="M9 18l6-6-6-6" />
                         </svg>
                     </div>
@@ -271,7 +281,7 @@ function ScheduleItem({ schedule, isPast, onDelete, onSwipe, isActiveSwipe, onNa
             >
                 <button
                     onClick={() => onDelete(schedule.id)}
-                    className="h-full w-full bg-red-500 flex items-center justify-center text-white"
+                    className="h-full w-full bg-[#C17C74] flex items-center justify-center text-white rounded-r-2xl"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />

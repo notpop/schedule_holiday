@@ -58,7 +58,7 @@ export default function CreatePlan() {
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                 </motion.button>
-                <h1 className="text-2xl font-bold">新しい休日プラン</h1>
+                <h1 className="text-2xl font-bold text-[#67A599]">新しい休日プラン</h1>
             </motion.div>
 
             <motion.form
@@ -98,7 +98,7 @@ export default function CreatePlan() {
 
                 <motion.button
                     type="submit"
-                    className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium shadow-md border border-primary/20 hover:bg-primary/90"
+                    className="w-full py-3 bg-[#67A599] text-white rounded-lg font-medium shadow-md hover:bg-[#67A599]/90"
                     whileHover={{ scale: 1.01, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
