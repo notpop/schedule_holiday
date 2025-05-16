@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { NavigationProvider } from "@/utils/navigation-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,14 +43,14 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <meta name="theme-color" content="#E98B4D" />
+        <meta name="theme-color" content="#67A599" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <NavigationProvider>{children}</NavigationProvider>
       </body>
     </html>
   );

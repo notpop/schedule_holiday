@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { addSchedule } from '@/utils/storage';
 import { generateId, generateTimeSlots } from '@/utils/helpers';
+import { useNavigation } from '@/utils/navigation-context';
+import { PageTransition } from '@/components/PageTransition';
 
 interface CreateScheduleClientProps {
     planId: string;
@@ -18,6 +20,7 @@ export default function CreateScheduleClient({ planId }: CreateScheduleClientPro
     const [endTime, setEndTime] = useState('00:10');
     const [memo, setMemo] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { setDirection } = useNavigation();
 
     // 10分間隔のタイムスロットを生成
     const timeSlots = generateTimeSlots(10);
@@ -64,14 +67,12 @@ export default function CreateScheduleClient({ planId }: CreateScheduleClientPro
 
     return (
         <Container className="py-6">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mb-6 flex items-center"
-            >
+            <PageTransition className="mb-6 flex items-center">
                 <button
-                    onClick={() => router.back()}
+                    onClick={() => {
+                        setDirection('backward');
+                        router.back();
+                    }}
                     className="mr-4 p-2 rounded-full hover:bg-accent/10 transition-colors"
                     aria-label="戻る"
                 >
@@ -80,15 +81,9 @@ export default function CreateScheduleClient({ planId }: CreateScheduleClientPro
                     </svg>
                 </button>
                 <h1 className="text-2xl font-bold text-[#67A599]">予定を追加</h1>
-            </motion.div>
+            </PageTransition>
 
-            <motion.form
-                onSubmit={handleSubmit}
-                className="space-y-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.3 }}
-            >
+            <PageTransition delay={0.1} className="space-y-6">
                 <div className="space-y-2">
                     <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
                         タイトル
@@ -160,10 +155,11 @@ export default function CreateScheduleClient({ planId }: CreateScheduleClientPro
                     className="w-full py-3 bg-[#67A599] text-white rounded-xl font-medium shadow-md hover:shadow-lg"
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
+                    onClick={handleSubmit}
                 >
                     {isSubmitting ? '作成中...' : '予定を追加'}
                 </motion.button>
-            </motion.form>
+            </PageTransition>
         </Container>
     );
 } 

@@ -6,12 +6,15 @@ import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { addHolidayPlan } from '@/utils/storage';
 import { generateId, getTodayString } from '@/utils/helpers';
+import { useNavigation } from '@/utils/navigation-context';
+import { PageTransition } from '@/components/PageTransition';
 
 export default function CreatePlan() {
     const router = useRouter();
     const [title, setTitle] = useState('');
     const [date, setDate] = useState(getTodayString());
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { setDirection } = useNavigation();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -42,14 +45,12 @@ export default function CreatePlan() {
 
     return (
         <Container className="py-6">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mb-6 flex items-center"
-            >
+            <PageTransition className="mb-6 flex items-center">
                 <motion.button
-                    onClick={() => router.back()}
+                    onClick={() => {
+                        setDirection('backward');
+                        router.back();
+                    }}
                     className="mr-4 p-2 rounded-full hover:bg-secondary/50 transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -59,53 +60,51 @@ export default function CreatePlan() {
                     </svg>
                 </motion.button>
                 <h1 className="text-2xl font-bold text-[#67A599]">新しい休日プラン</h1>
-            </motion.div>
+            </PageTransition>
 
-            <motion.form
-                onSubmit={handleSubmit}
-                className="space-y-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.3 }}
-            >
-                <div className="space-y-2">
-                    <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
-                        タイトル
-                    </label>
-                    <input
-                        id="title"
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="例: GW、夏休み、誕生日など"
-                        className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                        autoFocus
-                    />
-                </div>
+            <PageTransition delay={0.1} className="space-y-6">
+                <form onSubmit={handleSubmit}>
+                    <div className="space-y-6">
+                        <div className="space-y-2">
+                            <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
+                                タイトル
+                            </label>
+                            <input
+                                id="title"
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="例: GW、夏休み、誕生日など"
+                                className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                                autoFocus
+                            />
+                        </div>
 
-                <div className="space-y-2">
-                    <label htmlFor="date" className="block text-sm font-medium text-muted-foreground">
-                        日付
-                    </label>
-                    <input
-                        id="date"
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                </div>
+                        <div className="space-y-2">
+                            <label htmlFor="date" className="block text-sm font-medium text-muted-foreground">
+                                日付
+                            </label>
+                            <input
+                                id="date"
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                        </div>
 
-                <motion.button
-                    type="submit"
-                    className="w-full py-3 bg-[#67A599] text-white rounded-lg font-medium shadow-md hover:bg-[#67A599]/90"
-                    whileHover={{ scale: 1.01, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-                    whileTap={{ scale: 0.98 }}
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? '作成中...' : '休日プランを作成'}
-                </motion.button>
-            </motion.form>
+                        <motion.button
+                            type="submit"
+                            className="w-full py-3 bg-[#67A599] text-white rounded-lg font-medium shadow-md hover:bg-[#67A599]/90"
+                            whileHover={{ scale: 1.01, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                            whileTap={{ scale: 0.98 }}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? '作成中...' : '休日プランを作成'}
+                        </motion.button>
+                    </div>
+                </form>
+            </PageTransition>
         </Container>
     );
 } 

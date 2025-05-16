@@ -7,12 +7,15 @@ import { HolidayPlan } from '@/types';
 import { getHolidayPlans, deleteHolidayPlan } from '@/utils/storage';
 import { formatDate, isPastDate, isCurrentDate, isFutureDate } from '@/utils/helpers';
 import { Container } from '@/components/ui/Container';
+import { useNavigation } from '@/utils/navigation-context';
+import { PageTransition } from '@/components/PageTransition';
 
 export default function Home() {
   const [plans, setPlans] = useState<HolidayPlan[]>([]);
   const [currentDateTime, setCurrentDateTime] = useState<string>('');
   const [activeSwipe, setActiveSwipe] = useState<string | null>(null);
   const router = useRouter();
+  const { setDirection } = useNavigation();
 
   useEffect(() => {
     // 現在の日時を設定
@@ -56,6 +59,7 @@ export default function Home() {
   const handleNavigateToPlan = (planId: string) => {
     // スワイプ中は画面遷移しない
     if (activeSwipe === null) {
+      setDirection('forward');
       router.push(`/plan/${planId}`);
     }
   };
@@ -68,15 +72,10 @@ export default function Home() {
 
   return (
     <Container className="py-6 flex flex-col">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="mb-2"
-      >
+      <PageTransition className="mb-2">
         <h1 className="text-3xl font-bold mb-1 text-[#67A599]">休日スケジュール</h1>
         <p className="text-sm text-muted-foreground mb-4">{currentDateTime}</p>
-      </motion.div>
+      </PageTransition>
 
       {/* スワイプのヒント表示 */}
       {plans.length > 0 && (
@@ -96,19 +95,17 @@ export default function Home() {
       )}
 
       {plans.length === 0 ? (
-        <motion.div
-          className="flex flex-col items-center justify-center h-[60vh] text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
+        <PageTransition delay={0.2} className="flex flex-col items-center justify-center h-[60vh] text-center">
           <div className="text-6xl mb-4">📅</div>
           <p className="text-lg mb-6 text-muted-foreground">
             休日プランがまだありません
           </p>
           <motion.button
             className="bg-[#67A599] text-white py-4 px-8 rounded-full font-medium shadow-lg border-none hover:opacity-90 flex items-center gap-2"
-            onClick={() => router.push('/create')}
+            onClick={() => {
+              setDirection('forward');
+              router.push('/create');
+            }}
             whileTap={{ scale: 0.95 }}
             initial={{ scale: 1 }}
             whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
@@ -119,7 +116,7 @@ export default function Home() {
             </svg>
             新しい休日プランを作成
           </motion.button>
-        </motion.div>
+        </PageTransition>
       ) : (
         <div className="space-y-4">
           {upcomingPlans.length > 0 && (
@@ -177,7 +174,10 @@ export default function Home() {
           transition={{ delay: 0.3, type: 'spring' }}
         >
           <motion.button
-            onClick={() => router.push('/create')}
+            onClick={() => {
+              setDirection('forward');
+              router.push('/create');
+            }}
             className="bg-[#67A599] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-none"
             whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
             whileTap={{ scale: 0.95 }}
@@ -218,13 +218,9 @@ function PlanItem({ plan, index, isPast, onSwipe, onDelete, onNavigate, isActive
     : null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: isPast ? 0.7 : 1, y: 0 }}
-      exit={{ opacity: 0, x: -100 }}
-      transition={{ delay: 0.1 * index, duration: 0.3 }}
+    <PageTransition
+      delay={0.1 * index}
       className="relative overflow-hidden rounded-2xl"
-      layout
     >
       {/* スワイプ可能なコンテナ */}
       <motion.div
@@ -233,6 +229,7 @@ function PlanItem({ plan, index, isPast, onSwipe, onDelete, onNavigate, isActive
         dragElastic={0.1}
         onDragEnd={(_, info) => onSwipe(plan.id, info)}
         className="relative"
+        layout
       >
         {/* プラン表示 */}
         <div
@@ -285,6 +282,6 @@ function PlanItem({ plan, index, isPast, onSwipe, onDelete, onNavigate, isActive
           <span className="ml-1">削除</span>
         </button>
       </motion.div>
-    </motion.div>
+    </PageTransition>
   );
 }
