@@ -45,8 +45,8 @@ export const getCurrentTimeString = (): string => {
     return format(new Date(), 'HH:mm');
 };
 
-// タイムスロットの配列を生成（例：["00:00", "00:30", "01:00", ...）
-export const generateTimeSlots = (interval: number = 30): string[] => {
+// タイムスロットの配列を生成（例：["00:00", "00:10", "00:20", ...）
+export const generateTimeSlots = (interval: number = 10): string[] => {
     const slots: string[] = [];
 
     for (let hour = 0; hour < 24; hour++) {

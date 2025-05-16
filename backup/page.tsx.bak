@@ -1,0 +1,19 @@
+import { getHolidayPlanById } from '@/utils/storage';
+import PlanDetailClient from './PlanDetailClient';
+
+interface PlanDetailProps {
+    params: {
+        id: string;
+    };
+}
+
+export default function PlanDetail({ params }: PlanDetailProps) {
+    const id = params.id;
+    const plan = getHolidayPlanById(id);
+
+    if (!plan) {
+        return <div>プランが見つかりませんでした</div>;
+    }
+
+    return <PlanDetailClient plan={plan} id={id} />;
+} 

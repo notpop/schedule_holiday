@@ -95,17 +95,24 @@ export default function Home() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <Link href={`/plan/${plan.id}`}>
-                      <div className="bg-secondary rounded-lg p-5 shadow-sm hover:shadow-md transition-all border border-secondary/50">
-                        <h2 className="text-lg font-semibold">{plan.title}</h2>
-                        <p className="text-sm text-muted-foreground">
-                          {formatDate(plan.date)}
-                        </p>
-                        <div className="mt-2 text-sm">
-                          {plan.schedules.length === 0 ? (
-                            <p className="text-muted-foreground">予定なし</p>
-                          ) : (
-                            <p>{plan.schedules.length}個の予定</p>
-                          )}
+                      <div className="bg-secondary rounded-lg p-5 shadow-sm hover:shadow-md transition-all border border-secondary/50 relative">
+                        <div className="pr-4">
+                          <h2 className="text-lg font-semibold">{plan.title}</h2>
+                          <p className="text-sm text-muted-foreground">
+                            {formatDate(plan.date)}
+                          </p>
+                          <div className="mt-2 text-sm">
+                            {plan.schedules.length === 0 ? (
+                              <p className="text-muted-foreground">予定なし</p>
+                            ) : (
+                              <p>{plan.schedules.length}個の予定</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                            <path d="M9 18l6-6-6-6" />
+                          </svg>
                         </div>
                       </div>
                     </Link>
