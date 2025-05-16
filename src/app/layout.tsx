@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "休日スケジュール",
+  title: "holidays",
   description: "休日の予定を効率的に管理するアプリ",
   manifest: "/manifest.json",
   icons: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "休日スケジュール",
+    title: "holidays",
   },
 };
 

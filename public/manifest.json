@@ -1,11 +1,11 @@
 {
-    "name": "休日スケジュール",
-    "short_name": "休日スケジュール",
+    "name": "Holidays",
+    "short_name": "Holidays",
     "description": "休日の予定を効率的に管理するアプリ",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#4F46E5",
+    "theme_color": "#67A599",
     "icons": [
         {
             "src": "/icons/icon-192x192.png",

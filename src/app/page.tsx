@@ -73,7 +73,7 @@ export default function Home() {
   return (
     <Container className="py-6 flex flex-col">
       <PageTransition className="mb-2">
-        <h1 className="text-3xl font-bold mb-1 text-[#67A599]">休日スケジュール</h1>
+        <h1 className="text-3xl font-bold mb-1 text-[#67A599]">Holidays</h1>
         <p className="text-sm text-muted-foreground mb-4">{currentDateTime}</p>
       </PageTransition>
 
